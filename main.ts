@@ -1,84 +1,44 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
 
-// Remember to rename these classes and interfaces!
 
-interface MyPluginSettings {
-	mySetting: string;
-}
 
-const DEFAULT_SETTINGS: MyPluginSettings = {
-	mySetting: 'default'
-}
+const doneRegexPattern= /\[x\]/i;
+const remainingLines = [];
+const completedTodos = [];
 
 export default class MyPlugin extends Plugin {
-	settings: MyPluginSettings;
-	statusBarTextElement: HTMLSpanElement;
 
 	async onload() {
-		await this.loadSettings();
-		this.statusBarTextElement = this.addStatusBarItem();createEl("span");
-		
-		let i = 1;
-		this.statusBarTextElement.textContent = i.toString();
-		this.app.workspace.on("editor-change", (e) =>{
-			i ++;
-			this.statusBarTextElement.textContent = i.toString();
+
+			this.app.workspace.on("editor-change", (e) =>{
+					const lines = e.getDoc().getValue().split('\n');
+					console.log(lines)
+					let i = 1;
+					lines.forEach(line => {
+						if (doneRegexPattern.test(line)) {
+							let now = new Date()
+							  console.log(line.concat(formatDate(now)))
+							  //line = line.concat(formatDate(now));
+							//if (i<3) e.replaceSelection(line);
+							
+							i++
+						} 
+					  });
 		})
+
+		//const test = this.app.workspace.getActiveViewOfType(MarkdownView)
+		//test?.editor.
 	}
+}
 
-	onunload() {
-
-	}
-
+function formatDate(date: Date): string {
+	const yyyy = date.getFullYear();
+	const mm = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+	const dd = String(date.getDate()).padStart(2, '0');
 	
-
-	async loadSettings() {
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
-	}
-
-	async saveSettings() {
-		await this.saveData(this.settings);
-	}
-}
-
-class SampleModal extends Modal {
-	constructor(app: App) {
-		super(app);
-	}
-
-	onOpen() {
-		const {contentEl} = this;
-		contentEl.setText('Woah!');
-	}
-
-	onClose() {
-		const {contentEl} = this;
-		contentEl.empty();
-	}
-}
-
-class SampleSettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
-
-	constructor(app: App, plugin: MyPlugin) {
-		super(app, plugin);
-		this.plugin = plugin;
-	}
-
-	display(): void {
-		const {containerEl} = this;
-
-		containerEl.empty();
-
-		new Setting(containerEl)
-			.setName('Setting #1')
-			.setDesc('It\'s a secret')
-			.addText(text => text
-				.setPlaceholder('Enter your secret')
-				.setValue(this.plugin.settings.mySetting)
-				.onChange(async (value) => {
-					this.plugin.settings.mySetting = value;
-					await this.plugin.saveSettings();
-				}));
-	}
-}
+	const hh = String(date.getHours()).padStart(2, '0');
+	const min = String(date.getMinutes()).padStart(2, '0');
+	const ss = String(date.getSeconds()).padStart(2, '0');
+	
+	return ` - ${yyyy}-${mm}-${dd}`; // Custom format ${hh}-${min}-${ss}
+  }
