@@ -1,3 +1,6 @@
+plugin to add date time to a checkbox when checked
+
+
 # Obsidian Sample Plugin
 
 This is a sample plugin for Obsidian (https://obsidian.md).
