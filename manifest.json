@@ -2,10 +2,10 @@
 	"id": "Done-Tasks-Add-Date-Time",
 	"name": "Done Tasks Add Date Time",
 	"version": "1.0.0",
-	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
-	"isDesktopOnly": false
+	"minAppVersion": "1.8.9",
+	"description": "Adding a date time after checking of a checkbox (todo item). It also removes that date time if the box gets unchecked",
+	"author": "Sam Rotthier",
+	"authorUrl": "https://github.com/SamRotthier",
+	"fundingUrl": "",
+	"isDesktopOnly": true
 }
