@@ -1,3 +1,7 @@
+In this project I'm building a plugin to add date time to a checkbox when checked.
+this works in combination with my script to archive done tasks that can be attached to a button (from meta bind)
+
+
 # Obsidian Sample Plugin
 
 This is a sample plugin for Obsidian (https://obsidian.md).
